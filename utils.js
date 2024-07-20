@@ -4,7 +4,7 @@ import os from 'os';
 import path from 'path';
 import ffmpegInstaller from '@ffmpeg-installer/ffmpeg';
 import ffmpeg from 'fluent-ffmpeg';
-import { translateConfig, videoDir, whisperModel } from './config.js';
+import { srtConfig, whisperModel } from './config.js';
 
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
@@ -15,15 +15,15 @@ export const renderTemplate = (template, data) => {
   return new Function(...names, `return \`${template}\`;`)(...values);
 };
 
-export const renderFilePath = (template, fileName) => {
+export const renderFilePath = (dir, template, fileName) => {
   const data = {
     fileName,
-    sourceLanguage: translateConfig.sourceLanguage,
-    targetLanguage: translateConfig.targetLanguage,
+    sourceLanguage: srtConfig.sourceLanguage,
+    targetLanguage: srtConfig.targetLanguage,
   };
   const finalPath = template || 'temp-${fileName}'; // 如果不保存字幕文件，需要先生成临时文件
   const filePath = renderTemplate(finalPath, data);
-  return `${videoDir}/${filePath}`;
+  return `${dir}/${filePath}`;
 };
 
 export const extractAudio = (videoPath, audioPath) => {
@@ -108,3 +108,15 @@ export const installWhisper = async () => {
     await runCommand('make', ['-C', './whisper.cpp']);
   }
 };
+
+export const formatTime = (msTime) =>
+{
+  let time = msTime / 1000;
+  let hour = Math.floor(time / 60 / 60);
+  hour = hour.toString().padStart(2, "0");
+  let minute = Math.floor(time / 60) % 60;
+  minute = minute.toString().padStart(2, "0");
+  let second = Math.floor(time) % 60;
+  second = second.toString().padStart(2, "0");
+  return `${hour}:${minute}:${second}`;
+}

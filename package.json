@@ -17,6 +17,8 @@
     "axios": "^1.6.2",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
-    "fluent-ffmpeg": "^2.1.2"
+    "fluent-ffmpeg": "^2.1.2",
+    "tencentcloud-sdk-nodejs-tmt": "latest",
+    "glob" : "latest"
   }
 }
