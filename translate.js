@@ -76,15 +76,33 @@ export async function translate(folder, fileName, absolutePath) {
       }
       else if (targetSrtFormat == "vtt")
       {
-        for (var i = 2; i < data.length; i += 3) {
-          const source = data[i + 1];
-          if (!source) continue;
-          const text = await translateText(source);
-          items.push({
-            startEndTime: data[i],
-            targetContent: text,
-            sourceContent: source,
-          });
+        let step = 3
+        for (var j = 2; j < data.length; j += step) {
+          let i = 1
+          let content = ""
+          while(true)
+          {
+            const source = data[j + i];
+            if(!source || source.trim().length === 0)
+            {
+              break
+            }
+            content += source
+            i++
+          }
+          if(i > 2)
+          {
+            step += i - 2
+          }
+          if(content != "")
+          {
+            const text = await translateText(content);
+            items.push({
+              startEndTime: data[i],
+              targetContent: text,
+              sourceContent: content,
+            });
+          }
         }
       }
       const fileSave = path.join(folder, `${renderTemplate(targetSrtSaveName, { fileName, ...translateConfig })}.${targetSrtFormat}`);
