@@ -11,14 +11,14 @@ export async function genSrt()
   const startTime = Date.now();
   console.log(videoDir)
   const mp4file = await glob(videoDir + '/**/*.mp4', { ignore: 'node_modules/**' })
-  let i = 1
+  let i = 0
   for await (const nameWithPath of mp4file) {
     const file = path.basename(nameWithPath)
     const dir = path.dirname(nameWithPath)
 
     if (file.endsWith('.mp4')) {
-      log('%s (%d / %d)', file, i, mp4file.length);
       i++;
+      log('%s (%d / %d)', file, i, mp4file.length);
       try {
         const lastIndex = file.lastIndexOf('.');
         const fileName = file.substring(0, lastIndex);

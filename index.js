@@ -4,6 +4,7 @@ import { translateSrt } from './translateSrt.js';
 import { countSrt } from './countSrt.js';
 import { genSrt } from './genSrt.js';
 import { installWhisper } from './utils.js';
+import { deleteSrt } from './deleteSrt.js';
 
 
 config();
@@ -26,4 +27,7 @@ else if (process.argv[3] == "-c")
 {
     await countSrt();
 }
-
+else if (process.argv[3] == "-d")
+{
+    await deleteSrt();
+}

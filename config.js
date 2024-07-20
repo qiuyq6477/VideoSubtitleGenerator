@@ -15,7 +15,7 @@ large-v1
 large-v2
 large-v3
  */
-export const whisperModel = 'small.en' //'base.en';
+export const whisperModel = 'medium' //'base.en';
 
 export const srtConfig = {
   sourceLanguage: '',

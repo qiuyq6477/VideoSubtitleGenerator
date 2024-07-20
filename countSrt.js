@@ -39,12 +39,23 @@ export async function countSrt()
       }
       else if (targetSrtFormat == "vtt")
       {
-        let step = 3
-        for (var j = 2; j < data.length; j += step) {
+        for (var j = 0; j < data.length;) {
+          let source = data[j];
+          if(!source || source.trim().length === 0)
+          {
+            j++
+            continue
+          }
+          if(source.indexOf("-->") < 0)
+          {
+            j++
+            continue;
+          }
+
           let i = 1
           while(true)
           {
-            const source = data[j + i];
+            source = data[j + i];
             if(!source || source.trim().length === 0)
             {
               break
@@ -53,10 +64,7 @@ export async function countSrt()
             lineCount++
             i++
           }
-          if(i > 2)
-          {
-            step += i - 2
-          }
+          j += i;
         }
       }
       charCount += tempCount

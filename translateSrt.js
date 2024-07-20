@@ -43,7 +43,7 @@ export async function translateSrt()
 
   const srtfile = await glob(videoDir + '/**/*' + srtConfig.sourceLanguage + '.' + targetSrtFormat, { ignore: 'node_modules/**' })
   srtfile.sort()
-  let i = 1
+  let i = 0
   for await (const nameWithPath of srtfile) {
     i++
     log('%s (%d / %d)', path.basename(nameWithPath), i, srtfile.length);
