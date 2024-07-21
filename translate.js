@@ -25,6 +25,7 @@ export async function translateText(source)
     case supportedService.volc:
       const volc = await import('./service/volc.js');
       text = await volc.default(source);
+      timesPersecond = requestTimesPerSecond.volc;
       break;
     case supportedService.baidu:
       const baidu = await import('./service/baidu.js');
